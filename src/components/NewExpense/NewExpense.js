@@ -1,14 +1,34 @@
-import react from 'react'
-import './NewExpense.css'
-import ExpenseForm from './ExpenseForm';
+import "./NewExpense.css";
+import { useState } from "react";
+import ExpenseForm from "./ExpenseForm";
 
 const NewExpense = (props) => {
-    
-    return(
-        <div className="new-expense">
-            <ExpenseForm onExpenseAdded = {props.onExpenseAdded}/>
-        </div>
-    );
-}
+  const [addExpenseButtonClicked, setAddExpenseButtonClicked] = useState(false);
+
+  const newExpenseButtonClickedHandler = () => {
+    setAddExpenseButtonClicked(true);
+  };
+
+  const cancelButtonClickedhandler = () => {
+    console.log("cancel clicked");
+    setAddExpenseButtonClicked(false);
+  };
+
+  return (
+    <div className="new-expense">
+      {addExpenseButtonClicked ? (
+        <ExpenseForm
+          onExpenseAdded={props.onExpenseAdded}
+          cancelClicked={cancelButtonClickedhandler}
+        />
+      ) : (
+          <button type="button" onClick={newExpenseButtonClickedHandler}>
+            Add New Expense
+          </button>
+        
+      )}
+    </div>
+  );
+};
 
 export default NewExpense;
